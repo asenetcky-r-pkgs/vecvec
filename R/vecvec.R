@@ -1,15 +1,20 @@
-vecvec <-
-  S7::new_class(
-    "vecvec",
-    properties = list(
-      primary = S7::class_character,
-      compare = S7::class_character
+vevec <- function(primary, lookup) {
+  checkmate::assert(
+    checkmate::check_character(
+      primary,
+      min.chars = 2,
+      any.missing = FALSE,
+      all.missing = FALSE
     ),
-    validator = function(self) {
-      if (length(self@primary) < 1) {
-        "@primary vector must be length > 0"
-      } else if (length(self@compare) < 1) {
-        "@compare vector must be length > 0"
-      }
-    }
+    checkmate::check_character(
+      lookup,
+      min.chars = 2,
+      any.missing = FALSE,
+      all.missing = FALSE
+    ),
+    combine = "and"
   )
+
+  #standardize
+  #index
+}
