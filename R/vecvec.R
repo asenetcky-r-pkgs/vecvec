@@ -24,5 +24,14 @@ vecvec <- function(primary, lookup) {
   prepped_lookup <- prep_lookup(lookup_index$data_index)
 
   # match
-  match(prepped_primary, prepped_lookup)
+  matches <- match(prepped_primary, prepped_lookup)
+
+  #vecvec
+  dplyr::lst(
+    indices = dplyr::lst(
+      primary = primary_index,
+      lookup = lookup_index
+    ),
+    matches = matches
+  )
 }
