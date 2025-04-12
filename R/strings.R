@@ -44,6 +44,8 @@ prep_string <- function(x) {
 }
 
 prep_stnd_string <- function(.data) {
+  stnd_string <- NULL
+
   checkmate::assert(
     checkmate::check_data_frame(.data),
     checkmate::check_names(
