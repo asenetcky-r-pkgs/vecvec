@@ -2,7 +2,7 @@ exact_whole_match <- function(.data, lookup) {
   .data |>
     dplyr::inner_join(
       lookup,
-      by = c("exact_string" = "lookup_string")
+      by = "exact_string"
     ) |>
     grab_cols()
 }
@@ -27,7 +27,7 @@ exact_token_match <- function(.data) {
   prep_string_token <- lookup_string <- NULL
 
   .data |>
-    dplyr::filter(prep_string_token == lookup_string) |>
+    dplyr::filter(prep_string_token == prep_string) |>
     grab_cols()
 }
 
@@ -36,19 +36,20 @@ exact_substring_match <- function(.data) {
 
   .data |>
     dplyr::filter(
-      stringr::str_detect(prep_string_token, lookup_string)
+      stringr::str_detect(prep_string_token, prep_string)
     ) |>
     grab_cols()
 }
 
-fuzzy_match <- function(.data, lookup, dist = 1) {
+fuzzy_match <- function(primary, lookup, dist = 1) {
   prep_string_token <- lookup_id <- NULL
+  fuzzy_target <- dplyr::pull(lookup, prep_string)
 
-  .data |>
+  primary |>
     dplyr::mutate(
       lookup_id = stringdist::amatch(
         prep_string_token,
-        lookup,
+        fuzzy_target,
         maxDist = dist
       )
     ) |>
@@ -56,25 +57,28 @@ fuzzy_match <- function(.data, lookup, dist = 1) {
     grab_cols()
 }
 
-tidy_matches <- function(.data) {
-  data <- .data
+tidy_matches <- function(primary, lookup) {
+  lookup_id <- exact_string <- NULL
 
-  tidy <- format_as_tidytext(data)
-  cross_joined <- cross_join(tidy)
+  tidy <- format_as_tidytext(primary)
+
+  lookup <-
+    lookup |>
+    dplyr::select(lookup_id, prep_string, exact_string)
+  cross_joined <- cross_join(tidy, lookup)
 
   dplyr::lst(
     exact_tokens = exact_token_match(cross_joined),
     exact_substring = exact_substring_match(cross_joined),
-    fuzzies = fuzzy_match(tidy)
+    fuzzies = fuzzy_match(tidy, lookup)
   )
 }
 
-match <- function(.data) {
-  data <- .data
+match <- function(primary, lookup) {
   checkmate::assert(
-    checkmate::check_data_frame(data),
+    checkmate::check_data_frame(primary),
     checkmate::check_names(
-      colnames(data),
+      colnames(primary),
       must.include = c(
         "stnd_string",
         "prep_string",
@@ -85,8 +89,8 @@ match <- function(.data) {
   )
 
   dplyr::lst(
-    exact_whole_string = exact_whole_match(data),
-    tidy = tidy_matches(data)
+    exact_whole_string = exact_whole_match(primary, lookup),
+    tidy = tidy_matches(primary, lookup)
   ) |>
     purrr::list_flatten()
 }
