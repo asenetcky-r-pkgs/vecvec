@@ -1,5 +1,7 @@
 standardize_vec <- function(vec) {
-  tibble::as_tibble_col(var) |>
+  value <- stnd_string <- original_row_id <- NULL
+
+  tibble::as_tibble_col(vec) |>
     dplyr::mutate(
       original_row_id = dplyr::row_number(),
       stnd_string = value,
@@ -14,6 +16,8 @@ standardize_vec <- function(vec) {
 }
 
 reduce_stnd_strings <- function(.data) {
+  stnd_string <- NULL
+
   # grab only unique strings
   .data |>
     dplyr::filter(!is.na(stnd_string)) |>
@@ -38,15 +42,16 @@ backflush_ids <- function(.data, unique_strings) {
 }
 
 # return named list of indices
-index <- function(var, name) {
+index <- function(vec) {
+  unique_string_id <- original_row_id <- NULL
+
   checkmate::assert(
-    checkmate::check_vector(var, strict = TRUE, min.len = 1L),
-    checkmate::check_character(var),
-    checkmate::check_character(name, min.chars = 1L),
+    checkmate::check_vector(vec, strict = TRUE, min.len = 1L),
+    checkmate::check_character(vec),
     combine = "and"
   )
 
-  index <- standardize_var(var, name)
+  index <- standardize_vec(vec)
 
   unique_strings <- reduce_stnd_strings(index)
 
