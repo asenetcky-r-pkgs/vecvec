@@ -1,6 +1,6 @@
 Package: vecvec
 Title: Index and Match a Character Vector Against Another
-Version: 0.1.0
+Version: 0.3.0
 Authors@R: 
     person("Alexander", "Senetcky", , "asenetcky@gmail.com", 
            role = c("aut", "cre", "cph"),
@@ -11,5 +11,11 @@ Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.3.2
 Imports: 
+    checkmate (>= 2.3.2),
+    dplyr (>= 1.1.4),
+    purrr (>= 1.0.4),
     reticulate (>= 1.41.0.1),
-    S7 (>= 0.2.0)
+    stringdist (>= 0.9.15),
+    stringr (>= 1.5.1),
+    tibble (>= 3.2.1),
+    tidytext (>= 0.4.2)
