@@ -29,7 +29,7 @@ You can install the development version of vecvec from [GitHub](https://github.c
 
 ```{r install}
 # install.packages("pak")
-pak::pak("asenetcky-r-pkgs/vecvec")
+pak::pak("asenetcky-r-pkgs/vecvec", ask = FALSE) |> suppressMessages()
 ```
 
 ## Usage
