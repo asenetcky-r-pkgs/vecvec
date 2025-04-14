@@ -17,3 +17,6 @@ A list containing indices and matches.
 \description{
 Matches a primary character vector against a lookup vector and returns indices and matches.
 }
+\examples{
+vecvec(create_random_names(), create_random_names())
+}

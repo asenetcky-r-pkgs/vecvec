@@ -9,11 +9,21 @@ human_readable(.vecvec, match_vars = c("whole", "token", "substring", "fuzzy"))
 \arguments{
 \item{.vecvec}{A \code{vecvec} object.}
 
-\item{match_vars}{A character vector of match variable names.}
+\item{match_vars}{A character vector of specifying which matches to return.
+Defaults to all matches:
+\itemize{
+\item whole: exact whole word matches with all spaces stripped out
+\item token: exact whole token matches
+\item substring: exact substring match
+\item fuzzy: fuzzy text match using OSA - strict, max distance == 1
+}}
 }
 \value{
 A data frame of human-readable matches.
 }
 \description{
 Converts a \code{vecvec} object into a human-readable format.
+}
+\examples{
+vecvec(create_random_names(), create_random_names()) |> human_readable()
 }

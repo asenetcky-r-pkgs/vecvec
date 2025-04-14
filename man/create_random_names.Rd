@@ -15,3 +15,6 @@ A character vector of random names.
 \description{
 Generates a list of random names.
 }
+\examples{
+create_random_names(num_names = 10)
+}
