@@ -36,7 +36,7 @@ vecvec <- function(primary, lookup) {
   )
 }
 
-grab_match_matrix <- function(.vecvec) {
+create_match_matrix <- function(.vecvec) {
   match_matrix <-
     .vecvec$indices$primary$data_index |>
     dplyr::select(
@@ -92,8 +92,8 @@ human_readable <- function(.vecvec) {
     )
 
   .vecvec |>
-    grab_match_matrix() |>
     unique_matches() |>
+    create_match_matrix() |>
     dplyr::left_join(
       lookup,
       by = "lookup_id"
