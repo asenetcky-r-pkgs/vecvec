@@ -4,6 +4,8 @@
 # vecvec
 
 <!-- badges: start -->
+
+[![R-CMD-check](https://github.com/asenetcky-r-pkgs/vecvec/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/asenetcky-r-pkgs/vecvec/actions/workflows/R-CMD-check.yaml)
 <!-- badges: end -->
 
 The goal of vecvec is to match a “primary” character vector against
@@ -36,12 +38,12 @@ example <-
 example |>
   purrr::map(head)
 #> $primary
-#> [1] "WILLIAM"         "sarah"           "barbara wilson"  "ROBERT GONZALEZ"
-#> [5] "allen"           "linda"          
+#> [1] "christopher"   "ELIJAH MILLER" "walker"        "MARY"         
+#> [5] "Perez"         "MARTIN"       
 #> 
 #> $lookup
-#> [1] "Luna Jones"     "Isabella Brown" "JOSEPH"         "scott"         
-#> [5] "ramirez"        "clark"
+#> [1] "JAMES"          "Linda Anderson" "ELIJAH"         "thomas"        
+#> [5] "Taylor"         "emma anderson"
 
 
 my_vecvec <- vecvec(example$primary, example$lookup)
@@ -51,39 +53,39 @@ my_vecvec |>
 #> List of 2
 #>  $ primary:List of 2
 #>   ..$ data_index  : tibble [100 × 4] (S3: tbl_df/tbl/data.frame)
-#>   ..$ string_index: tibble [86 × 2] (S3: tbl_df/tbl/data.frame)
+#>   ..$ string_index: tibble [81 × 2] (S3: tbl_df/tbl/data.frame)
 #>  $ lookup :List of 2
 #>   ..$ data_index  : tibble [100 × 4] (S3: tbl_df/tbl/data.frame)
-#>   ..$ string_index: tibble [75 × 2] (S3: tbl_df/tbl/data.frame)
+#>   ..$ string_index: tibble [79 × 2] (S3: tbl_df/tbl/data.frame)
 #> List of 4
-#>  $ exact_whole_string  : tibble [43 × 2] (S3: tbl_df/tbl/data.frame)
-#>   ..$ unique_string_id: int [1:43] 2 5 5 6 9 12 19 21 21 21 ...
-#>   ..$ lookup_id       : int [1:43] 95 41 98 18 68 23 79 28 38 96 ...
-#>  $ tidy_exact_tokens   : tibble [131 × 2] (S3: tbl_df/tbl/data.frame)
-#>   ..$ unique_string_id: int [1:131] 2 4 4 4 5 5 6 8 9 10 ...
-#>   ..$ lookup_id       : int [1:131] 95 85 93 14 41 98 18 3 68 31 ...
-#>  $ tidy_exact_substring: tibble [139 × 2] (S3: tbl_df/tbl/data.frame)
-#>   ..$ unique_string_id: int [1:139] 1 2 4 4 4 5 5 6 8 9 ...
-#>   ..$ lookup_id       : int [1:139] 92 95 85 93 14 41 98 18 3 68 ...
-#>  $ tidy_fuzzies        : tibble [87 × 2] (S3: tbl_df/tbl/data.frame)
-#>   ..$ unique_string_id: int [1:87] 1 2 4 4 5 6 8 9 10 10 ...
-#>   ..$ lookup_id       : int [1:87] 22 95 85 14 41 18 3 68 31 68 ...
+#>  $ exact_whole_string  : tibble [39 × 2] (S3: tbl_df/tbl/data.frame)
+#>   ..$ unique_string_id: int [1:39] 3 4 5 6 7 11 12 17 17 17 ...
+#>   ..$ lookup_id       : int [1:39] 75 89 25 45 44 42 35 24 80 96 ...
+#>  $ tidy_exact_tokens   : tibble [95 × 2] (S3: tbl_df/tbl/data.frame)
+#>   ..$ unique_string_id: int [1:95] 2 2 2 3 4 5 6 7 8 8 ...
+#>   ..$ lookup_id       : int [1:95] 3 61 88 75 89 25 45 44 54 70 ...
+#>  $ tidy_exact_substring: tibble [103 × 2] (S3: tbl_df/tbl/data.frame)
+#>   ..$ unique_string_id: int [1:103] 2 2 2 3 4 5 6 7 8 8 ...
+#>   ..$ lookup_id       : int [1:103] 3 61 88 75 89 25 45 44 54 70 ...
+#>  $ tidy_fuzzies        : tibble [72 × 2] (S3: tbl_df/tbl/data.frame)
+#>   ..$ unique_string_id: int [1:72] 2 2 3 4 5 6 7 8 8 9 ...
+#>   ..$ lookup_id       : int [1:72] 3 88 75 89 25 45 44 54 36 10 ...
 ```
 
 ``` r
 human_readable(my_vecvec)
-#> # A tibble: 159 × 4
-#>    original_row_id primary         lookup_id lookup_value
-#>              <int> <chr>               <int> <chr>       
-#>  1               1 WILLIAM                92 Liam        
-#>  2               1 WILLIAM                22 WILLIAMS    
-#>  3               2 sarah                  95 sarah       
-#>  4               4 ROBERT GONZALEZ        85 ROBERT      
-#>  5               4 ROBERT GONZALEZ        14 GONZALEZ    
-#>  6               4 ROBERT GONZALEZ        93 robert      
-#>  7               5 allen                  41 allen       
-#>  8               5 allen                  98 allen       
-#>  9               6 linda                  18 LINDA       
-#> 10               8 Joseph Moore            3 JOSEPH      
-#> # ℹ 149 more rows
+#> # A tibble: 118 × 4
+#>    original_row_id primary       lookup_id lookup_value
+#>              <int> <chr>             <int> <chr>       
+#>  1               2 ELIJAH MILLER         3 ELIJAH      
+#>  2               2 ELIJAH MILLER        88 Miller      
+#>  3               2 ELIJAH MILLER        61 ELIJAH      
+#>  4               3 walker               75 WALKER      
+#>  5               4 MARY                 89 Mary        
+#>  6               5 Perez                25 Perez       
+#>  7               6 MARTIN               45 Martin      
+#>  8               7 MIA                  44 MIA         
+#>  9               8 Mateo Jones          54 Mateo       
+#> 10               8 Mateo Jones          36 Jones       
+#> # ℹ 108 more rows
 ```
