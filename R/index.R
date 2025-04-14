@@ -1,7 +1,7 @@
 #' @title Standardize Vector
 #' @description Standardizes a character vector for indexing.
 #' @param vec A character vector.
-#' @return A tibble with standardized strings.
+#' @returns A tibble with standardized strings.
 standardize_vec <- function(vec) {
   value <- stnd_string <- original_row_id <- NULL
 
@@ -22,7 +22,7 @@ standardize_vec <- function(vec) {
 #' @title Reduce Standardized Strings
 #' @description Reduces a data frame to unique standardized strings.
 #' @param .data A data frame of standardized strings.
-#' @return A data frame of unique strings.
+#' @returns A data frame of unique strings.
 reduce_stnd_strings <- function(.data) {
   stnd_string <- NULL
 
@@ -30,17 +30,18 @@ reduce_stnd_strings <- function(.data) {
   .data |>
     dplyr::filter(!is.na(stnd_string)) |>
     dplyr::pull(stnd_string) |>
-    unique() |>
+    list
+  unique() |>
     tibble::as_tibble_col("stnd_string") |>
     dplyr::mutate(unique_string_id = dplyr::row_number())
 }
 
-#' @title Backflush IDs
+#' @title Map Indicies to Data
 #' @description Maps unique string IDs back to the original data.
-#' @param .data A data frame of original strings.
+#' @param .data A data frame of indices.
 #' @param unique_strings A data frame of unique strings.
-#' @return A data frame with mapped IDs.
-backflush_ids <- function(.data, unique_strings) {
+#' @returns A data frame with mapped IDs.
+map_ids <- function(.data, unique_strings) {
   checkmate::assert(
     checkmate::check_data_frame(unique_strings),
     checkmate::check_true("stnd_string" %in% colnames(unique_strings)),
@@ -57,7 +58,7 @@ backflush_ids <- function(.data, unique_strings) {
 #' @title Index
 #' @description Creates an index for a character vector.
 #' @param vec A character vector.
-#' @return A list containing data and string indices.
+#' @returns A list containing data and string indices.
 index <- function(vec) {
   unique_string_id <- original_row_id <- NULL
 
@@ -72,7 +73,7 @@ index <- function(vec) {
   unique_strings <- reduce_stnd_strings(index)
 
   index <-
-    backflush_ids(index, unique_strings) |>
+    map_ids(index, unique_strings) |>
     dplyr::relocate(
       unique_string_id,
       .after = original_row_id

@@ -1,8 +1,7 @@
 #' @title Standardize String
 #' @description Converts a string to lowercase and removes extra spaces.
 #' @param x A character vector.
-#' @return A standardized character vector.
-#' @importFrom stringr str_to_lower str_squish
+#' @returns A standardized character vector.
 standardize_str <- function(x) {
   stringr::str_to_lower(
     stringr::str_squish(
@@ -14,8 +13,7 @@ standardize_str <- function(x) {
 #' @title Replace Separators
 #' @description Replaces separators (e.g., commas, underscores) with spaces.
 #' @param x A character vector.
-#' @return A character vector with separators replaced.
-#' @importFrom stringr str_replace_all str_squish
+#' @returns A character vector with separators replaced.
 replace_sep <- function(x) {
   stringr::str_replace_all(
     x,
@@ -28,8 +26,7 @@ replace_sep <- function(x) {
 #' @title Remove Slash
 #' @description Removes slashes from a character vector.
 #' @param x A character vector.
-#' @return A character vector without slashes.
-#' @importFrom stringr str_remove_all str_squish
+#' @returns A character vector without slashes.
 remove_slash <- function(x) {
   stringr::str_remove_all(
     x,
@@ -41,8 +38,7 @@ remove_slash <- function(x) {
 #' @title Remove Numbers
 #' @description Removes numbers from a character vector.
 #' @param x A character vector.
-#' @return A character vector without numbers.
-#' @importFrom stringr str_remove_all str_squish
+#' @returns A character vector without numbers.
 remove_numbers <- function(x) {
   stringr::str_remove_all(
     x,
@@ -54,8 +50,7 @@ remove_numbers <- function(x) {
 #' @title Remove All Spaces
 #' @description Removes all spaces from a character vector.
 #' @param x A character vector.
-#' @return A character vector without spaces.
-#' @importFrom stringr str_remove_all
+#' @returns A character vector without spaces.
 remove_all_spaces <- function(x) {
   stringr::str_remove_all(x, " ")
 }
@@ -63,8 +58,7 @@ remove_all_spaces <- function(x) {
 #' @title Prepare String
 #' @description Prepares a string by replacing separators, removing slashes, and removing numbers.
 #' @param x A character vector.
-#' @return A prepared character vector.
-#' @importFrom checkmate check_character
+#' @returns A prepared character vector.
 prep_string <- function(x) {
   checkmate::check_character(x)
   x |>
@@ -76,8 +70,7 @@ prep_string <- function(x) {
 #' @title Prepare Standardized String
 #' @description Prepares a standardized string for matching.
 #' @param .data A data frame containing a `stnd_string` column.
-#' @return A data frame with prepared strings.
-#' @importFrom dplyr mutate
+#' @returns A data frame with prepared strings.
 prep_stnd_string <- function(.data) {
   stnd_string <- NULL
 

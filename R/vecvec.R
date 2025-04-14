@@ -2,9 +2,8 @@
 #' @description Matches a primary character vector against a lookup vector and returns indices and matches.
 #' @param primary A character vector to be matched.
 #' @param lookup A character vector to match against.
-#' @return A list containing indices and matches.
-#' @importFrom dplyr lst
-#' @importFrom checkmate assert check_character
+#' @export
+#' @returns A list containing indices and matches.
 vecvec <- function(primary, lookup) {
   checkmate::assert(
     checkmate::check_character(
@@ -46,8 +45,7 @@ vecvec <- function(primary, lookup) {
 #' @title Create Match Matrix
 #' @description Creates a match matrix from a `vecvec` object.
 #' @param .vecvec A `vecvec` object.
-#' @return A data frame containing the match matrix.
-#' @importFrom dplyr select left_join rename
+#' @returns A data frame containing the match matrix.
 create_match_matrix <- function(.vecvec) {
   value <- lookup_id <- NULL
 
@@ -88,9 +86,7 @@ create_match_matrix <- function(.vecvec) {
 #' @description Extracts unique matches from a match matrix.
 #' @param match_matrix A match matrix.
 #' @param match_vars A character vector of match variable names.
-#' @return A data frame of unique matches.
-#' @importFrom tidyr pivot_longer
-#' @importFrom dplyr group_by reframe ungroup filter
+#' @returns A data frame of unique matches.
 unique_matches <- function(
   match_matrix,
   match_vars = c(
@@ -119,6 +115,7 @@ unique_matches <- function(
 #' @param .vecvec A `vecvec` object.
 #' @param match_vars A character vector of match variable names.
 #' @return A data frame of human-readable matches.
+#' @export
 #' @importFrom dplyr select left_join
 human_readable <- function(
   .vecvec,
