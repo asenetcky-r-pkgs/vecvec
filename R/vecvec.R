@@ -1,3 +1,10 @@
+#' @title Match Primary Vector Against Lookup Vector
+#' @description Matches a primary character vector against a lookup vector and returns indices and matches.
+#' @param primary A character vector to be matched.
+#' @param lookup A character vector to match against.
+#' @return A list containing indices and matches.
+#' @importFrom dplyr lst
+#' @importFrom checkmate assert check_character
 vecvec <- function(primary, lookup) {
   checkmate::assert(
     checkmate::check_character(
@@ -36,6 +43,11 @@ vecvec <- function(primary, lookup) {
   )
 }
 
+#' @title Create Match Matrix
+#' @description Creates a match matrix from a `vecvec` object.
+#' @param .vecvec A `vecvec` object.
+#' @return A data frame containing the match matrix.
+#' @importFrom dplyr select left_join rename
 create_match_matrix <- function(.vecvec) {
   value <- lookup_id <- NULL
 
@@ -72,6 +84,13 @@ create_match_matrix <- function(.vecvec) {
     dplyr::left_join(fuzzy, by = "unique_string_id", relationship = r)
 }
 
+#' @title Extract Unique Matches
+#' @description Extracts unique matches from a match matrix.
+#' @param match_matrix A match matrix.
+#' @param match_vars A character vector of match variable names.
+#' @return A data frame of unique matches.
+#' @importFrom tidyr pivot_longer
+#' @importFrom dplyr group_by reframe ungroup filter
 unique_matches <- function(
   match_matrix,
   match_vars = c(
@@ -95,6 +114,12 @@ unique_matches <- function(
     dplyr::filter(!is.na(lookup_id))
 }
 
+#' @title Human-Readable Matches
+#' @description Converts a `vecvec` object into a human-readable format.
+#' @param .vecvec A `vecvec` object.
+#' @param match_vars A character vector of match variable names.
+#' @return A data frame of human-readable matches.
+#' @importFrom dplyr select left_join
 human_readable <- function(
   .vecvec,
   match_vars = c(

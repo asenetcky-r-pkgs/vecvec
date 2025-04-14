@@ -1,7 +1,14 @@
+#' @title Create Random Names
+#' @description Generates a list of random names.
+#' @param num_names The number of names to generate.
+#' @return A character vector of random names.
 create_random_names <- function(num_names = 100) {
   generate_name(num_names)
 }
 
+#' @title Grab First Names
+#' @description Returns a list of common first names.
+#' @return A character vector of first names.
 grab_first_names <- function() {
   c(
     "Olivia",
@@ -47,6 +54,9 @@ grab_first_names <- function() {
   )
 }
 
+#' @title Grab Last Names
+#' @description Returns a list of common last names.
+#' @return A character vector of last names.
 grab_last_names <- function() {
   last_names <- c(
     "Smith",
@@ -92,18 +102,30 @@ grab_last_names <- function() {
   )
 }
 
+#' @title Generate Name Type
+#' @description Randomly assigns a name type (first, last, or both).
+#' @param num_names The number of names to generate.
+#' @return A tibble with name types.
 generate_name_type <- function(num_names) {
   # Decide name type: 1 = First only, 2 = Last only, 3 = First + Last
   sample(1:3, num_names, replace = TRUE) |>
     tibble::as_tibble_col("name_type")
 }
 
+#' @title Generate Random Transform
+#' @description Randomly assigns a case transformation to names.
+#' @param num_names The number of names to generate.
+#' @return A tibble with name transformations.
 generate_random_transform <- function(num_names) {
   # Decide case transformation: 1 = As is, 2 = Lowercase, 3 = Uppercase
   sample(1:3, num_names, replace = TRUE) |>
     tibble::as_tibble_col("name_transform")
 }
 
+#' @title Generate Name
+#' @description Generates random names with transformations.
+#' @param num_names The number of names to generate.
+#' @return A character vector of generated names.
 generate_name <- function(num_names) {
   name <- NULL
 
