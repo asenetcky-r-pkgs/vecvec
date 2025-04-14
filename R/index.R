@@ -30,8 +30,7 @@ reduce_stnd_strings <- function(.data) {
   .data |>
     dplyr::filter(!is.na(stnd_string)) |>
     dplyr::pull(stnd_string) |>
-    list
-  unique() |>
+    unique() |>
     tibble::as_tibble_col("stnd_string") |>
     dplyr::mutate(unique_string_id = dplyr::row_number())
 }
