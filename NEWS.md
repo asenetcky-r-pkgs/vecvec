@@ -1,5 +1,10 @@
 # vecvec 0.8.0
 
+## Features
+
+- Added Github Action: Standard Check
+- Added Github Action: pkgdown website build
+
 # vecvec 0.7.0
 
 ## Features
