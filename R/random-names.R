@@ -1,4 +1,4 @@
-grab_random_names <- function(num_names = 100) {
+create_random_names <- function(num_names = 100) {
   generate_name(num_names)
 }
 
@@ -105,6 +105,8 @@ generate_random_transform <- function(num_names) {
 }
 
 generate_name <- function(num_names) {
+  name <- NULL
+
   random_names <-
     dplyr::bind_cols(
       generate_name_type(num_names),
