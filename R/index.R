@@ -19,6 +19,23 @@ standardize_vec <- function(vec) {
     dplyr::relocate(original_row_id)
 }
 
+# WIP
+# string lazies together?
+stnd_vec_py <- function(vec) {
+  vec <- reticulate::r_to_py(vec)
+  pl$LazyFrame(vec)$with_columns(
+    pl$col("column_0")$str$to_lowercase()$str$strip_chars()$alias(
+      "stnd_string"
+    ),
+    pl$col("column_0")$alias("value"),
+  )$with_row_index("original_row_id")$select(
+    "original_row_id",
+    "value",
+    "stnd_string"
+  ) #$collect()
+}
+
+
 #' @title Reduce Standardized Strings
 #' @description Reduces a data frame to unique standardized strings.
 #' @param .data A data frame of standardized strings.
@@ -33,6 +50,14 @@ reduce_stnd_strings <- function(.data) {
     unique() |>
     tibble::as_tibble_col("stnd_string") |>
     dplyr::mutate(unique_string_id = dplyr::row_number())
+}
+
+# TODO needs some conversion of NA NULL or filter em out beforehand
+# this works
+red_stnd_str_py <- function(lf) {
+  lf$select("stnd_string")$filter(
+    pl$col("stnd_string")$is_not_null()
+  )$unique()$with_row_index("unique_string_id")
 }
 
 #' @title Map Indicies to Data
