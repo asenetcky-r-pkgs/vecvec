@@ -1,3 +1,5 @@
+# vecvec 0.8.1
+
 # vecvec 0.8.0
 
 ## Features
