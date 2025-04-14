@@ -114,9 +114,8 @@ unique_matches <- function(
 #' @description Converts a `vecvec` object into a human-readable format.
 #' @param .vecvec A `vecvec` object.
 #' @param match_vars A character vector of match variable names.
-#' @return A data frame of human-readable matches.
+#' @returns A data frame of human-readable matches.
 #' @export
-#' @importFrom dplyr select left_join
 human_readable <- function(
   .vecvec,
   match_vars = c(
