@@ -1,9 +1,15 @@
 #' @title Match Primary Vector Against Lookup Vector
 #' @description Matches a primary character vector against a lookup vector and returns indices and matches.
+#'
 #' @param primary A character vector to be matched.
 #' @param lookup A character vector to match against.
+#'
 #' @export
+#'
 #' @returns A list containing indices and matches.
+#'
+#' @examples
+#' vecvec(create_random_names(), create_random_names())
 vecvec <- function(primary, lookup) {
   checkmate::assert(
     checkmate::check_character(
@@ -112,10 +118,22 @@ unique_matches <- function(
 
 #' @title Human-Readable Matches
 #' @description Converts a `vecvec` object into a human-readable format.
+#'
 #' @param .vecvec A `vecvec` object.
-#' @param match_vars A character vector of match variable names.
+#' @param match_vars A character vector of specifying which matches to return.
+#' Defaults to all matches:
+#'
+#' * whole: exact whole word matches with all spaces stripped out
+#' * token: exact whole token matches
+#' * substring: exact substring match
+#' * fuzzy: fuzzy text match using OSA - strict, max distance == 1
+#'
 #' @returns A data frame of human-readable matches.
+#'
 #' @export
+#'
+#' @examples
+#' vecvec(create_random_names(), create_random_names()) |> human_readable()
 human_readable <- function(
   .vecvec,
   match_vars = c(

@@ -1,8 +1,13 @@
 #' @title Create Random Names
 #' @description Generates a list of random names.
+#'
 #' @param num_names The number of names to generate.
+#'
 #' @export
 #' @returns A character vector of random names.
+#'
+#' @examples
+#' create_random_names(num_names = 10)
 create_random_names <- function(num_names = 100) {
   generate_name(num_names)
 }
