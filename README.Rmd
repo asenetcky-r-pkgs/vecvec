@@ -18,10 +18,12 @@ knitr::opts_chunk$set(
 <!-- badges: start -->
 <!-- badges: end -->
 
-The goal of vecvec is to match a primary character vector against 
-the compare group character.
+The goal of vecvec is to match a "primary" character vector against 
+another character vector "lookup".
 
 ## Installation
+
+`vecvec` is still in active development. Expect breaking changes.
 
 You can install the development version of vecvec from [GitHub](https://github.com/) with:
 
@@ -30,11 +32,28 @@ You can install the development version of vecvec from [GitHub](https://github.c
 pak::pak("asenetcky-r-pkgs/vecvec")
 ```
 
-## Example
+## Usage
 
-This is a basic example which shows you how to solve a common problem:
-
-```{r example}
+```{r usage}
 library(vecvec)
-## basic example code
+library(purrr)
+
+example <-
+  dplyr::lst(
+    primary = create_random_names(),
+    lookup = create_random_names()
+  )
+
+example |>
+  purrr::map(head)
+
+
+my_vecvec <- vecvec(example$primary, example$lookup)
+
+my_vecvec |>
+  purrr::walk(dplyr::glimpse)
+```
+
+```{r matches}
+human_readable(my_vecvec)
 ```
