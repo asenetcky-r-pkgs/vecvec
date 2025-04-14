@@ -1,3 +1,8 @@
+#' @title Exact Whole Match
+#' @description Performs an exact match of whole strings between two data frames.
+#' @param .data A data frame of primary strings.
+#' @param lookup A data frame of lookup strings.
+#' @returns A data frame of matched rows.
 exact_whole_match <- function(.data, lookup) {
   .data |>
     dplyr::inner_join(
@@ -7,6 +12,10 @@ exact_whole_match <- function(.data, lookup) {
     grab_cols()
 }
 
+#' @title Format as Tidytext
+#' @description Formats a data frame for tokenized text analysis.
+#' @param .data A data frame of strings.
+#' @returns A tokenized data frame.
 format_as_tidytext <- function(.data) {
   unique_string_id <- prep_string <- prep_string_token <- NULL
 
@@ -19,10 +28,19 @@ format_as_tidytext <- function(.data) {
     )
 }
 
+#' @title Cross Join
+#' @description Performs a cross join between two data frames.
+#' @param .data A data frame.
+#' @param lookup A lookup data frame.
+#' @returns A cross-joined data frame.
 cross_join <- function(.data, lookup) {
   dplyr::cross_join(.data, lookup)
 }
 
+#' @title Exact Token Match
+#' @description Matches tokens exactly between two data frames.
+#' @param .data A data frame of tokens.
+#' @returns A data frame of matched tokens.
 exact_token_match <- function(.data) {
   prep_string_token <- lookup_string <- NULL
 
@@ -31,6 +49,10 @@ exact_token_match <- function(.data) {
     grab_cols()
 }
 
+#' @title Exact Substring Match
+#' @description Matches substrings between two data frames.
+#' @param .data A data frame of tokens.
+#' @returns A data frame of matched substrings.
 exact_substring_match <- function(.data) {
   prep_string_token <- lookup_string <- NULL
 
@@ -41,6 +63,12 @@ exact_substring_match <- function(.data) {
     grab_cols()
 }
 
+#' @title Fuzzy Match
+#' @description Performs a fuzzy match between two data frames.
+#' @param primary A data frame of primary strings.
+#' @param lookup A data frame of lookup strings.
+#' @param dist The maximum distance for fuzzy matching.
+#' @returns A data frame of fuzzy matches.
 fuzzy_match <- function(primary, lookup, dist = 1) {
   prep_string_token <- lookup_id <- NULL
   fuzzy_target <- dplyr::pull(lookup, prep_string)
@@ -57,6 +85,11 @@ fuzzy_match <- function(primary, lookup, dist = 1) {
     grab_cols()
 }
 
+#' @title Tidy Matches
+#' @description Performs tidy matches (exact tokens, substrings, and fuzzies).
+#' @param primary A data frame of primary strings.
+#' @param lookup A data frame of lookup strings.
+#' @returns A list of tidy matches.
 tidy_matches <- function(primary, lookup) {
   lookup_id <- exact_string <- NULL
 
@@ -74,6 +107,11 @@ tidy_matches <- function(primary, lookup) {
   )
 }
 
+#' @title Match
+#' @description Matches primary strings against lookup strings using various methods.
+#' @param primary A data frame of primary strings.
+#' @param lookup A data frame of lookup strings.
+#' @returns A list of matches.
 match <- function(primary, lookup) {
   checkmate::assert(
     checkmate::check_data_frame(primary),

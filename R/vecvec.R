@@ -1,3 +1,15 @@
+#' @title Match Primary Vector Against Lookup Vector
+#' @description Matches a primary character vector against a lookup vector and returns indices and matches.
+#'
+#' @param primary A character vector to be matched.
+#' @param lookup A character vector to match against.
+#'
+#' @export
+#'
+#' @returns A list containing indices and matches.
+#'
+#' @examples
+#' vecvec(create_random_names(), create_random_names())
 vecvec <- function(primary, lookup) {
   checkmate::assert(
     checkmate::check_character(
@@ -36,6 +48,10 @@ vecvec <- function(primary, lookup) {
   )
 }
 
+#' @title Create Match Matrix
+#' @description Creates a match matrix from a `vecvec` object.
+#' @param .vecvec A `vecvec` object.
+#' @returns A data frame containing the match matrix.
 create_match_matrix <- function(.vecvec) {
   value <- lookup_id <- NULL
 
@@ -72,6 +88,11 @@ create_match_matrix <- function(.vecvec) {
     dplyr::left_join(fuzzy, by = "unique_string_id", relationship = r)
 }
 
+#' @title Extract Unique Matches
+#' @description Extracts unique matches from a match matrix.
+#' @param match_matrix A match matrix.
+#' @param match_vars A character vector of match variable names.
+#' @returns A data frame of unique matches.
 unique_matches <- function(
   match_matrix,
   match_vars = c(
@@ -95,6 +116,24 @@ unique_matches <- function(
     dplyr::filter(!is.na(lookup_id))
 }
 
+#' @title Human-Readable Matches
+#' @description Converts a `vecvec` object into a human-readable format.
+#'
+#' @param .vecvec A `vecvec` object.
+#' @param match_vars A character vector of specifying which matches to return.
+#' Defaults to all matches:
+#'
+#' * whole: exact whole word matches with all spaces stripped out
+#' * token: exact whole token matches
+#' * substring: exact substring match
+#' * fuzzy: fuzzy text match using OSA - strict, max distance == 1
+#'
+#' @returns A data frame of human-readable matches.
+#'
+#' @export
+#'
+#' @examples
+#' vecvec(create_random_names(), create_random_names()) |> human_readable()
 human_readable <- function(
   .vecvec,
   match_vars = c(

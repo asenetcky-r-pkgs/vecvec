@@ -1,3 +1,10 @@
+# vecvec 0.7.0
+
+## Features
+
+- Added basic documentation with examples
+- Exported user facing functions to the namespace
+
 # vecvec 0.6.0
 
 ## Features

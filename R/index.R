@@ -1,3 +1,7 @@
+#' @title Standardize Vector
+#' @description Standardizes a character vector for indexing.
+#' @param vec A character vector.
+#' @returns A tibble with standardized strings.
 standardize_vec <- function(vec) {
   value <- stnd_string <- original_row_id <- NULL
 
@@ -15,6 +19,10 @@ standardize_vec <- function(vec) {
     dplyr::relocate(original_row_id)
 }
 
+#' @title Reduce Standardized Strings
+#' @description Reduces a data frame to unique standardized strings.
+#' @param .data A data frame of standardized strings.
+#' @returns A data frame of unique strings.
 reduce_stnd_strings <- function(.data) {
   stnd_string <- NULL
 
@@ -27,7 +35,12 @@ reduce_stnd_strings <- function(.data) {
     dplyr::mutate(unique_string_id = dplyr::row_number())
 }
 
-backflush_ids <- function(.data, unique_strings) {
+#' @title Map Indicies to Data
+#' @description Maps unique string IDs back to the original data.
+#' @param .data A data frame of indices.
+#' @param unique_strings A data frame of unique strings.
+#' @returns A data frame with mapped IDs.
+map_ids <- function(.data, unique_strings) {
   checkmate::assert(
     checkmate::check_data_frame(unique_strings),
     checkmate::check_true("stnd_string" %in% colnames(unique_strings)),
@@ -41,7 +54,10 @@ backflush_ids <- function(.data, unique_strings) {
     )
 }
 
-# return named list of indices
+#' @title Index
+#' @description Creates an index for a character vector.
+#' @param vec A character vector.
+#' @returns A list containing data and string indices.
 index <- function(vec) {
   unique_string_id <- original_row_id <- NULL
 
@@ -56,7 +72,7 @@ index <- function(vec) {
   unique_strings <- reduce_stnd_strings(index)
 
   index <-
-    backflush_ids(index, unique_strings) |>
+    map_ids(index, unique_strings) |>
     dplyr::relocate(
       unique_string_id,
       .after = original_row_id
